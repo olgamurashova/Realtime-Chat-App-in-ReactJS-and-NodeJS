@@ -7,28 +7,39 @@ import { useState } from "react";
 
 const socket = io.connect("http://localhost:3000");
 
-function App() {
 
-function App () {
+
+export default function App () {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
 
   //function to join room
-const joinRoom = [];
+const joinRoom = () => {
+  if(username !=="" && room !==""){
+    socket.emit("join_room", room);
+    
+  }
+
 };
+
 
   return (
     <div className='App'>
 
       <h3>Join Chat</h3>
-      <input type="text" placeholder="Harry"/>
-      <input type="text" placeholder="Olga"/>
-      <button>Join a Room</button>
+      <input type="text" placeholder="Harry" 
+      onChange = {(event) => {setUsername(event.target.value);}} />
+
+      <input type="text" placeholder="Room Id"
+      onChange={(event) => {setRoom(event.target.value);}}
+      
+      />
+      <button onClick={joinRoom}>Join a Room</button>
       
 
     </div>
     
   );
-}
+};
 
-export default App;
+
