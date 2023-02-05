@@ -35,6 +35,8 @@ const joinRoom = () => {
       
       />
       <button onClick={joinRoom}>Join a Room</button>
+
+      <Chat socket={socket} username={username} room={room} />
       
 
     </div>
