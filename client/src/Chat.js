@@ -33,7 +33,7 @@ export default function Chat({socket, username, room}) {
 
 
   return (
-    <div>
+    <div className='chat-window'>
         <div className='chat-header'>
             <p>LIVE CHAT</p>
         </div>

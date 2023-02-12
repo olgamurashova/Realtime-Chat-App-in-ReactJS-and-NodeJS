@@ -27,6 +27,7 @@ const joinRoom = () => {
 
   return (
     <div className='App'>
+      <div className='joinChatContainer'>
 
       <h3>Join Chat</h3>
       <input type="text" placeholder="Harry" 
@@ -41,6 +42,7 @@ const joinRoom = () => {
       <Chat socket={socket} username={username} room={room} />
       
 
+    </div>
     </div>
     
   );
