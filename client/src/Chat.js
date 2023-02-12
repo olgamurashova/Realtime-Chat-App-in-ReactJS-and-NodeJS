@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import ScrollToBottom from "react-scroll-to-bottom"
+import ScrollToBottom from "react-scroll-to-bottom";
 
 export default function Chat({socket, username, room}) {
 
   const [currentMessage, setCurrentMessage] =  useState("");
+  const [messageList, setMessageList] = useState([]);
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -40,7 +41,31 @@ export default function Chat({socket, username, room}) {
             <p>LIVE CHAT</p>
         </div>
 
-        <div className='chat-body'></div>
+        <div className='chat-body'>
+          <ScrollToBottom className="message-container">
+            {messageList.map((messageContent) =>{
+              return (
+                <div className='message'
+                id={username === messageContent.author ? "you" : "other"}
+                
+                >
+                  <div> 
+                    <div className='message-content'>
+                      <p>{messageContent.message}</p>
+
+                    </div>
+                    <div className='message-beta'>
+                      <p id="time">{messageContent.time}</p>
+                      <p id="author">{messageContent.author}</p>
+                    </div>
+
+                  </div>
+
+                </div>
+              )
+            })}
+            </ScrollToBottom>
+        </div>
 
         <div className='chat-footer' value={currentMessage}>
             <input type="text" placeholder='Hey...'
