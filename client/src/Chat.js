@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
-import ScrollToBottom from "react-scroll-to-bottom";
 
 export default function Chat({socket, username, room}) {
 
@@ -29,7 +29,7 @@ export default function Chat({socket, username, room}) {
     socket.on("receive_message", (data) => {
       
       setMessageList((list) => [...list, data]);
-      
+      setCurrentMessage("");
 
     });
 
@@ -44,8 +44,9 @@ export default function Chat({socket, username, room}) {
         </div>
 
         <div className='chat-body'>
+          <ScrollToBottom>
          {messageList.map((messageContent) => {
-          return <div className='message'> 
+          return <div className='message' id={username === messageContent.author ? "you" : "other"}> 
 
           <div className='message-content'> 
           <p>{messageContent.message}</p>
@@ -54,21 +55,26 @@ export default function Chat({socket, username, room}) {
 
 
           <div className='message-meta'> 
-          <p>{messageContent.time}</p>
-          <p>{messageContent.author}</p>
+          <p id="time">{messageContent.time}</p>
+          <p author="author">{messageContent.author}</p>
           
           
           </div>
           
           </div>
+        
           
-         }
-
-         )}
+         })}
+         </ScrollToBottom>
         </div>
+        
 
         <div className='chat-footer' value={currentMessage}>
-            <input type="text" placeholder='Hey...'
+            <input type="text" 
+            value={currentMessage}
+            
+            
+            placeholder='Hey...'
             onChange = {(event) => {setCurrentMessage(event.target.value);
             }}
             
