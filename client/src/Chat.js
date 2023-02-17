@@ -18,6 +18,7 @@ export default function Chat({socket, username, room}) {
       }
 
       await socket.emit("send_message", messageData);
+      setMessageList((list) => [...list, messageData]);
     };
 
   }
@@ -26,7 +27,8 @@ export default function Chat({socket, username, room}) {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log(data);
+      
+      setMessageList((list) => [...list, data]);
       
 
     });
@@ -42,29 +44,27 @@ export default function Chat({socket, username, room}) {
         </div>
 
         <div className='chat-body'>
-          <ScrollToBottom className="message-container">
-            {messageList.map((messageContent) =>{
-              return (
-                <div className='message'
-                id={username === messageContent.author ? "you" : "other"}
-                
-                >
-                  <div> 
-                    <div className='message-content'>
-                      <p>{messageContent.message}</p>
+         {messageList.map((messageContent) => {
+          return <div className='message'> 
 
-                    </div>
-                    <div className='message-beta'>
-                      <p id="time">{messageContent.time}</p>
-                      <p id="author">{messageContent.author}</p>
-                    </div>
+          <div className='message-content'> 
+          <p>{messageContent.message}</p>
 
-                  </div>
+          </div>
 
-                </div>
-              )
-            })}
-            </ScrollToBottom>
+
+          <div className='message-meta'> 
+          <p>{messageContent.time}</p>
+          <p>{messageContent.author}</p>
+          
+          
+          </div>
+          
+          </div>
+          
+         }
+
+         )}
         </div>
 
         <div className='chat-footer' value={currentMessage}>
